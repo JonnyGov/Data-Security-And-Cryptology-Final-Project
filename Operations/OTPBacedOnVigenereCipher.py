@@ -5,6 +5,9 @@ import sys
 
 #https://github.com/albohlabs/one-time-pad/blob/master/otp.py
 #https://www.boxentriq.com/code-breaking/one-time-pad
+#in the link below look at section 2.3
+#https://www.matec-conferences.org/articles/matecconf/pdf/2018/56/matecconf_aasec2018_03008.pdf 
+
 abc = string.ascii_lowercase
 one_time_pad = list(abc)
 # random.shuffle(one_time_pad)
