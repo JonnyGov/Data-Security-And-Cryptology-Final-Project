@@ -66,7 +66,7 @@ def generateShares(n,m,secret):
 if __name__ == '__main__': 
       
     # (3,5) sharing scheme 
-    t,n = 3, 5
+    t,n = 4, 5
     secret = 1234
     print('Original Secret:', secret) 
    
