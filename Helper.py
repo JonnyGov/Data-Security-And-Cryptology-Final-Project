@@ -1,3 +1,4 @@
+#1234 -> bcde
 def numToWord(num):
     tempList=[]
     word=""
@@ -5,7 +6,7 @@ def numToWord(num):
     for l in tempList:
         word=word + chr(ord('a')+l)
     return(word)
-         
+#bcde->1234         
 def wordToNum(word):
     integers=[]
     for l in word:
@@ -16,10 +17,16 @@ def wordToNum(word):
     return an_integer
     
 
-
-if __name__ == '__main__': 
+def testWodrNumConvertions():
     word=numToWord(1234)
     print(word)
     
     num =wordToNum(word)
     print(num)
+
+
+
+if __name__ == '__main__': 
+    testWodrNumConvertions()
+    
+    

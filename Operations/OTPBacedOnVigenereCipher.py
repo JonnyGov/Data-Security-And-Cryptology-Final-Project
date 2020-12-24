@@ -39,9 +39,9 @@ def decrypt(ciphertext, key):
     char = abc[cipher]
 
     return char + decrypt(ciphertext[1:], key[1:])
-
-cccctext =encrypt("godisdead","testtesttest")
-planetext =decrypt(cccctext,"testtesttest")
+if __name__ == '__main__':
+    cccctext =encrypt("godisdead","testtesttest")
+    planetext =decrypt(cccctext,"testtesttest")
  
 
  

@@ -8,7 +8,8 @@ from decimal import *
    
       
 global field_size 
-field_size = 10**5
+#field_size = 10**5
+field_size = 10**4
    
 def reconstructSecret(shares): 
       
@@ -54,10 +55,10 @@ def generateShares(n,m,secret):
     # n shares with threshold m 
     cfs = coeff(m,secret) 
     shares = [] 
-      
+      #TODO: test r is not in shares 
     for i in range(1,n+1): 
         r = random.randrange(1, field_size) 
-        shares.append([r, polynom(r,cfs)]) 
+        shares.append([r, polynom(r,cfs)]) #[public,private]
       
     return shares 
   
