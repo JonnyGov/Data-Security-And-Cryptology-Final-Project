@@ -9,7 +9,7 @@ from decimal import *
       
 global field_size 
 #field_size = 10**5
-field_size = 10**4
+field_size = 10**5
    
 def reconstructSecret(shares): 
       
@@ -37,7 +37,7 @@ def polynom(x,coeff):
     # Evaluates a polynomial in x  
     # with coeff being the coefficient 
     # list 
-    return sum([x**(len(coeff)-i-1) * coeff[i] for i in range(len(coeff))]) 
+    return sum([x**(len(coeff)-i-1) * coeff[i] for i in range(len(coeff))])
    
 def coeff(t,secret): 
       

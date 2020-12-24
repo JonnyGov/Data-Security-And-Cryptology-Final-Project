@@ -2,6 +2,7 @@
 def numToWord(num):
     tempList=[]
     word=""
+
     [tempList.append(int(d)) for d in str(num)]
     for l in tempList:
         word=word + chr(ord('a')+l)
