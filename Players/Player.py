@@ -38,6 +38,8 @@ class Player:
          if DSA.verify(M, r, s, self.p, self.q, self.g, publicKey):
              print(self.name +": "+ name+ " is approved")
              return True
+         else:
+             print(self.name +": "+ name+ " is NOT approved")
          
      @deprecated( reason="You should use encryptStringOTP") 
      def encryptInt(self,number):          
@@ -136,6 +138,10 @@ class Player:
           r = dict(self.__otpDic)
           del r[key]
           self.__otpDic=r 
+          
+     #unsafe cypto wise   
+     def addKeyToOtpDic(self,name,key):
+         self.__otpDic[name]=key
      
  #------------------------------------testing ------------------------------------------------------------------------------------------------------------
 @deprecated( reason="You should use testingOpt") 
