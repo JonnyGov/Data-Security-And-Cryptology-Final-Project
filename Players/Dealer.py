@@ -5,16 +5,19 @@ import Helper
 import time
 import sys
 from deprecated import deprecated
+import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
 
 class Dealer(P.Player):
     
     publicSharedPart={}
     #note: for now p is a constant in shamir.py and any body can acces it witch is fine 
-    def __init__(self, name,otpDic, p, q, g,t = 4,n= 5,secret = 1234 ):
+    def __init__(self, name,otpDic,otpDicRokcet, p, q, g,t = 4,n= 5,secret = 1234 ):
          self._t=t
          self._n=n
          self.keysLeftToGive=n
+         self.__secret=secret
          self.__shares = shamir.generateShares(n, t, secret)
+         self.__otpDicRokcet=otpDicRokcet # only players who are allowed to have the seacret
          
          super().__init__(name, p, q, g,otpDic) 
     
@@ -48,12 +51,25 @@ class Dealer(P.Player):
         return ret #ret=[0-public part of shamir][1-encrypted privte part of shamir][2-r][3-s]
     
     
+    def encryptStringOTPForRocket(self,word,name):
+        if(name  not in self.__otpDicRokcet ):
+            print(self.name+": dosent have otp for "+name)   
+            return None
+        if(not   self.testOtpSize(word,self.__otpDicRokcet[name])):
+            print(self.name+":plane  text to large ")
+            return None
+        ctext=OTPBacedOnVigenereCipher.encrypt(word ,self.__otpDicRokcet[name])
+        del self.__otpDicRokcet[name] 
+        return ctext   
+    
     #to get seacret  the rocet needs to  sign "givemeSeacret" 
     def getSeacret(self, name,r,s): 
-        if(not super().IdUser(name,"givemeSeacret",r,s)):
+        if(not super().IdUser(name,"givemeseacret",r,s)):
             return None
-       
-        
+        privateAsString= Helper.numToWord(self.__secret)
+        private=self.encryptStringOTPForRocket(privateAsString,name)
+        return private
+    
         
         #return ret #ret=[0-public part of shamir][1-encrypted privte part of shamir][2-key for private part][3-r][4-s]
         
@@ -155,10 +171,49 @@ def testingShareDistribution():
       res =shamir.reconstructSecret(shares)
       print("the amount of keys left: " + str(d.keysLeftToGive))
       print(res)
+      
+      text = "givemeseacret"
+      M = str.encode(text, "ascii")
+      r, s = DSA.sign(M, p, q, g, x) 
+      
+def testGetSeacret():
+      N = 160
+      L = 1024
+      p, q, g = DSA.generate_params(L, N)
+           
+      x, y = DSA.generate_keys(g, p, q)
+        
+      text = "givemeseacret"
+      M = str.encode(text, "ascii")
+      r, s = DSA.sign(M, p, q, g, x)      
+      
+      
+      dictTest={}
+      otp =P.Player.createOTPBig()
+      dictTest["Dealer"]=otp
+      dictTest["Dealer2"]=otp  
      
+      #print(otp)
+      #print(dictTest) 
+        
+      d= Dealer("Dealer",dictTest,dictTest, p=p,q=q,g=g)
+
+      
+      d.receiveSignaturePublicKey(y, "Dealer")
+      cword= d.getSeacret( "Dealer",r,s)
+
+      d.receiveSignaturePublicKey(y, "Dealer2")
+      
+      d2= Dealer("Dealer2",dictTest,dictTest, p=p,q=q,g=g)
+      
+      ptext=d2.decryptAsStringOTP(cword, "Dealer2")
+      secret=Helper.wordToNum(ptext)
+      print(str(secret) +" "+cword) 
+
 if __name__ == '__main__': 
       #testingIdUser()
-      testingShareDistribution()
+      #testingShareDistribution()
+      testGetSeacret()
         
      
     
