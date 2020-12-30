@@ -39,6 +39,7 @@ class Dealer(P.Player):
         #for testing
         #print(forTesting)
         forTesting2=sys.maxsize
+        #print(self.__shares[self.keysLeftToGive-1][1])
         privateAsString= Helper.numToWord(self.__shares[self.keysLeftToGive-1][1])
         private=super().encryptStringOTP(privateAsString,name)
         if(private==None):
