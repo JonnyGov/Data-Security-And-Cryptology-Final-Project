@@ -30,6 +30,7 @@ class Player:
                   print( self.name +": unknown sender not approved")
                   return False 
               
+     # verify dsa signature.        
      def IdUser(self,name,Mstring,r,s):
          publicKey =self.testIfHasSignarurePublicKey(name)
          if(publicKey == False):
