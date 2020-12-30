@@ -119,7 +119,12 @@ class Player:
         self.removeKeyFromOtpDic(name)#removing otp - cus it was used 
         return ctext   
     
-    
+     def encryptIntOTP(self,num,name):
+          word=Helper.numToWord(num)
+          return self.encryptStringOTP(word,name)
+          
+         
+         
      def  decryptAsStringOTP(self, cword,name):
      
          if(name  not in self.__otpDic ):
@@ -133,6 +138,8 @@ class Player:
          self.removeKeyFromOtpDic(name)#removing otp - cus it was used 
          return text
      
+     def decryptAsIntOTP(self, cword,name): 
+          return Helper.wordToNum(self.decryptAsStringOTP(cword,name))
      
      def removeKeyFromOtpDic(self,key):
           r = dict(self.__otpDic)
@@ -158,7 +165,7 @@ def testingEncryptDecrypt():
    
 def testingOpt():
 
-     otp =Player.createOTPBigerThenField_size()
+     otp =Player.createOTPBig()
      
      dictTest={}
      dictTest["somename"]=otp  
@@ -171,11 +178,23 @@ def testingOpt():
      player =Player("testpalyer", 3,17 , 11,dictTest)
      print(player.decryptAsStringOTP(ctext,"somename"))
      
+def testingOTPIntegerEncryptDecrypt():
     
-       
+     otp =Player.createOTPBig()
+     dictTest={}
+     dictTest["somename"]=otp  
+     #print(dictTest)
+     player =Player("testpalyer", 3,17 , 11,dictTest)
+     ctext=player.encryptIntOTP(123456,"somename")
+     print(ctext)
+     player =Player("testpalyer2", 3,17 , 11,dictTest)
+     print(player.decryptAsIntOTP(ctext,"somename"))
+     #print(dictTest)
+
 
  
 if __name__ == '__main__': 
-  a=sys.version
-  print(Player.createOTPBig())
-  testingOpt()
+  #a=sys.version
+  #print(Player.createOTPBig())
+  #testingOpt()
+  testingOTPIntegerEncryptDecrypt()

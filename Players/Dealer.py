@@ -36,6 +36,8 @@ class Dealer(P.Player):
         
         #encrypting the private part
         forTesting=self.__shares[self.keysLeftToGive-1][1]
+        #for testing
+        #print(forTesting)
         forTesting2=sys.maxsize
         privateAsString= Helper.numToWord(self.__shares[self.keysLeftToGive-1][1])
         private=super().encryptStringOTP(privateAsString,name)
@@ -48,6 +50,7 @@ class Dealer(P.Player):
         r,s=super().sign(private)
         ret.append(r)
         ret.append(s)
+       
         return ret #ret=[0-public part of shamir][1-encrypted privte part of shamir][2-r][3-s]
     
     
@@ -62,7 +65,7 @@ class Dealer(P.Player):
         del self.__otpDicRokcet[name] 
         return ctext   
     
-    #to get seacret  the rocet needs to  sign "givemeSeacret" 
+    #to get seacret  the rocet needs to  sign "givemeseacret" 
     def getSeacret(self, name,r,s): 
         if(not super().IdUser(name,"givemeseacret",r,s)):
             return None
