@@ -53,7 +53,7 @@ class Dealer(P.Player):
        
         return ret #ret=[0-public part of shamir][1-encrypted privte part of shamir][2-r][3-s]
     
-    
+        
     def encryptStringOTPForRocket(self,word,name):
         if(name  not in self.__otpDicRokcet ):
             print(self.name+": dosent have otp for "+name)   
@@ -71,10 +71,15 @@ class Dealer(P.Player):
             return None
         privateAsString= Helper.numToWord(self.__secret)
         private=self.encryptStringOTPForRocket(privateAsString,name)
-        return private
+        r,s=super().sign(private)
+        ret=[]
+        ret.append(private)
+        ret.append(r)
+        ret.append(s)
+        return ret #ret=[0-encrypted seacret][1-r][2-s]
     
         
-        #return ret #ret=[0-public part of shamir][1-encrypted privte part of shamir][2-key for private part][3-r][4-s]
+        
         
      
 #------------------------------------testing ------------------------------------------------------------------------------------------------------------
@@ -180,38 +185,38 @@ def testingShareDistribution():
       r, s = DSA.sign(M, p, q, g, x) 
       
 def testGetSeacret():
+    
       N = 160
       L = 1024
       p, q, g = DSA.generate_params(L, N)
            
-      x, y = DSA.generate_keys(g, p, q)
+
         
       text = "givemeseacret"
       M = str.encode(text, "ascii")
-      r, s = DSA.sign(M, p, q, g, x)      
-      
       
       dictTest={}
       otp =P.Player.createOTPBig()
       dictTest["Dealer"]=otp
-      dictTest["Dealer2"]=otp  
+      dictTest["Roket"]=otp  
      
       #print(otp)
       #print(dictTest) 
-        
-      d= Dealer("Dealer",dictTest,dictTest, p=p,q=q,g=g)
+      d=Dealer("Dealer", dictTest, dictTest, p, q, g) 
+      ro=P.Player("Roket", p, q, g, dictTest)
+      
+      d.receiveSignaturePublicKey(ro.y,ro.name )
+      ro.receiveSignaturePublicKey(d.y,d.name )
+      ro.receiveSignaturePublicKey(ro.y,ro.name )
+      dictTest["Roket"]=otp  
+      r,s=ro.sign(text)   
+      ret= d.getSeacret("Roket", r, s)
+      print(ret)
+      dictTest["Roket"]=otp  
+      seacrt=ro.decryptAsIntOTP(ret[0],"Roket")
+      print(seacrt)
+      
 
-      
-      d.receiveSignaturePublicKey(y, "Dealer")
-      cword= d.getSeacret( "Dealer",r,s)
-
-      d.receiveSignaturePublicKey(y, "Dealer2")
-      
-      d2= Dealer("Dealer2",dictTest,dictTest, p=p,q=q,g=g)
-      
-      ptext=d2.decryptAsStringOTP(cword, "Dealer2")
-      secret=Helper.wordToNum(ptext)
-      print(str(secret) +" "+cword) 
 
 if __name__ == '__main__': 
       #testingIdUser()
