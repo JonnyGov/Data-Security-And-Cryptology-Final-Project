@@ -1,6 +1,6 @@
 import Operations.shamir as shamir
 import Operations.DSA as DSA
-import Player as P
+import Players.Player as P
 import Helper 
 import time
 import sys

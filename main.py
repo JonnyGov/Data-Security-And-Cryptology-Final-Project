@@ -1,64 +1,164 @@
-import Operations.shamir as shamir
-import Players.Person as Person
+import Players.Player as Player
+import Players.Person as P
 import Operations.DSA as DSA
 import Players.Rocket as Rocket
+import Players.Dealer as D
 import time
 
 def main():
-  # (3,5) sharing scheme 
-    t,n = 4, 5
-    secret = 1235
-        #print('Original Secret:', secret) 
-   
-    # Phase I: Generation of shares 
-    shares = shamir.generateShares(n, t, secret) 
-     #print('\nShares:', *shares) 
-    #Phase II: DSA
+    #inisilite security system:
+        
     N = 160
     L = 1024
     p, q, g = DSA.generate_params(L, N)
+    dealerName="deal"
+    rocketName="rocket"
+    p1Name="p1"
+    p2Name="p2"
+    p3Name="p3"
+    p4Name="p4"
+    otpDicRokcet={} # for dealer (rocket)
+    otpDicDealer={} # for dealer (person)
+    dictTest2={} # for rocket
+    dictP1={} # for person p1
+    dictP2={} # for person p2
+    dictP3={} # for person p3
+    dictP4={} # for person p4
     
-    #creating  the people and there names
-    p1= Person.Person( shares[0], p, q, g ,"person1")
-    p2= Person.Person( shares[1], p, q, g ,"person2")
-    p3= Person.Person( shares[2], p, q, g ,"person3")
-    p4= Person.Person( shares[3], p, q, g ,"person4")
+    #otp for rocket and dealer
+    otp=Player.Player.createOTPBig()
+    otpDicRokcet[rocketName]=otp
+    dictTest2[dealerName]=otp
     
-    r1=Rocket.Rocket(secret, p, q, g, "rocket")
-    r1.receivePublicKey(p1.y,"person1")
-    r1.receivePublicKey(p2.y,"person2")
-    r1.receivePublicKey(p3.y,"person3")
-    r1.receivePublicKey(p4.y,"person4")
+    #p1
+    #otp for dearl and person
+    otp =Player.Player.createOTPBig()
+    dictP1[dealerName]=otp
+    otpDicDealer[p1Name]=otp 
     
+    #otp for rocket and person
+    otp =Player.Player.createOTPBig()
+    dictTest2[p1Name]=otp
+    dictP1[rocketName]=otp
     
-    #########
+    #p2
+    #otp for dearl and person
+    otp =Player.Player.createOTPBig()
+    dictP2[dealerName]=otp
+    otpDicDealer[p2Name]=otp 
     
+    #otp for rocket and person
+    otp =Player.Player.createOTPBig()
+    dictTest2[p2Name]=otp
+    dictP2[rocketName]=otp
     
+    #p3
+    #otp for dearl and person
+    otp =Player.Player.createOTPBig()
+    dictP3[dealerName]=otp
+    otpDicDealer[p3Name]=otp 
     
-    ctext0 ,ctext1,key,ctext0RS,ctext1RS =p1.fullEncryption()
-    r1.reciveShamirKeyPart("person1",ctext0 ,ctext1,key,ctext0RS,ctext1RS)
+    #otp for rocket and person
+    otp =Player.Player.createOTPBig()
+    dictTest2[p3Name]=otp
+    dictP3[rocketName]=otp
     
-    ctext0 ,ctext1,key,ctext0RS,ctext1RS =p2.fullEncryption()
-    r1.reciveShamirKeyPart("person2",ctext0 ,ctext1,key,ctext0RS,ctext1RS)
+    #p4
+    #otp for dearl and person
+    otp =Player.Player.createOTPBig()
+    dictP4[dealerName]=otp
+    otpDicDealer[p4Name]=otp 
     
-    ctext0 ,ctext1,key,ctext0RS,ctext1RS =p3.fullEncryption()
-    r1.reciveShamirKeyPart("person3",ctext0 ,ctext1,key,ctext0RS,ctext1RS)
+    #otp for rocket and person
+    otp =Player.Player.createOTPBig()
+    dictTest2[p4Name]=otp
+    dictP4[rocketName]=otp
     
-    ctext0 ,ctext1,key,ctext0RS,ctext1RS =p4.fullEncryption()
-    r1.reciveShamirKeyPart("person4",ctext0 ,ctext1,key,ctext0RS,ctext1RS)
+    #create dealer:
+    dealer=D.Dealer(dealerName, otpDicDealer, otpDicRokcet, p, q, g)
+    #create rocket:
+    rocket= Rocket.Rocket(p, q, g,rocketName,dictTest2)
+    #create players:
+    p1=P.Person(p, q, g, p1Name, dictP1)
+    p2=P.Person(p, q, g, p2Name, dictP2)
+    p3=P.Person(p, q, g, p3Name, dictP3)
+    p4=P.Person(p, q, g, p4Name, dictP4)
     
-    if(r1.reconstructAndTestSecret()):
-        print("rocket launche sequence started ")
-        for  i in reversed(range(11)):
-            time.sleep(0.5)
-            print(i)
-        print("  /\ \n /  \ \n |  | \n |  | \n/ == \ \n|/**\| ")
-    else:
-        print("rokcet launche not approved")
+    #assign all sign to rocket:
+    rocket.receiveSignaturePublicKey(dealer.y,dealer.name)
+    rocket.receiveSignaturePublicKey(p1.y,p1.name)
+    rocket.receiveSignaturePublicKey(p2.y,p2.name)
+    rocket.receiveSignaturePublicKey(p3.y,p3.name)
+    rocket.receiveSignaturePublicKey(p4.y,p4.name)
+    #assign all sign to dealer:
+    dealer.receiveSignaturePublicKey(rocket.y,rocket.name)
+    dealer.receiveSignaturePublicKey(p1.y,p1.name)
+    dealer.receiveSignaturePublicKey(p2.y,p2.name)
+    dealer.receiveSignaturePublicKey(p3.y,p3.name)
+    dealer.receiveSignaturePublicKey(p4.y,p4.name)
     
+    #assign all sign to players:
+    p1.receiveSignaturePublicKey(dealer.y,dealer.name)
+    p1.receiveSignaturePublicKey(rocket.y,rocket.name)
+    
+    p2.receiveSignaturePublicKey(dealer.y,dealer.name)
+    p2.receiveSignaturePublicKey(rocket.y,rocket.name)
+    
+    p3.receiveSignaturePublicKey(dealer.y,dealer.name)
+    p3.receiveSignaturePublicKey(rocket.y,rocket.name)
+    
+    p4.receiveSignaturePublicKey(dealer.y,dealer.name)
+    p4.receiveSignaturePublicKey(rocket.y,rocket.name)
+    
+    #end inisilite
+    
+    # get secret from dealer to rocket
+    r,s=rocket.sign("givemeseacret")
+    ret= dealer.getSeacret(rocket.name,r,s)
+    #ret=[0-encrypted seacret][1-r][2-s]
+    rocket.reciveShamirSecret(dealer.name,ret[0],ret[1],ret[2])
+    
+    #get shares from dealer to persons:
+        
+    r,s=p1.sign("givemeshare")
+    ret= dealer.getRocketShare(p1.name,r,s)
+    p1.receiveShare(ret,dealer.name)
+    
+    r,s=p2.sign("givemeshare")
+    ret= dealer.getRocketShare(p2.name,r,s)
+    p2.receiveShare(ret,dealer.name)
+
+    
+    r,s=p3.sign("givemeshare")
+    ret= dealer.getRocketShare(p3.name,r,s)
+    p3.receiveShare(ret,dealer.name)
+
+    
+    r,s=p4.sign("givemeshare")
+    ret= dealer.getRocketShare(p4.name,r,s)
+    p4.receiveShare(ret,dealer.name)
+    
+    # give share from persons to rocket:
+        
+    #ret[0-public share][1-private share][2-r][3-s]
+    ret= p1.giveShareToRocket(rocket.name)
+    rocket.reciveShare(p1.name,ret[2],ret[3],ret[0:2])
+    
+    ret= p2.giveShareToRocket(rocket.name)
+    rocket.reciveShare(p2.name,ret[2],ret[3],ret[0:2])
+    
+    ret= p3.giveShareToRocket(rocket.name)
+    rocket.reciveShare(p3.name,ret[2],ret[3],ret[0:2])
+    
+    ret= p4.giveShareToRocket(rocket.name)
+    rocket.reciveShare(p4.name,ret[2],ret[3],ret[0:2])
+    
+   
     
 
 
 
 
 main()
+
+        

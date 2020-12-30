@@ -2,8 +2,8 @@ import Operations.DSA as DSA
 import Helper
 import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
 import random
-import Player as P
-import Dealer as D
+import Players.Player as P
+import Players.Dealer as D
 
 class Person(P.Player):
     __shared=[]

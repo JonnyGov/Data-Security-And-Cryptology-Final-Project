@@ -4,7 +4,8 @@ import Helper
 import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
 import random
 import Operations.shamir as shamir
-import Player as P
+import Players.Player as P
+import time
 class Rocket(P.Player):
     shamirParts=[]
     def __init__(self, p, q, g ,name,otpDic):
@@ -36,7 +37,10 @@ class Rocket(P.Player):
              self._launchEvent()
              return True
     def _launchEvent(self):
-        print("rocket launched!")
+        for  i in reversed(range(11)):
+            time.sleep(0.5)
+            print(i)
+        print("  /\ \n /  \ \n |  | \n |  | \n/ == \ \n|/**\| ")
         
 ##-----------------------------TEST---------------------------------------
 
@@ -135,13 +139,6 @@ if __name__ == '__main__':
     p2=Pr.Person(p, q, g, p2Name, dictP2)
     p3=Pr.Person(p, q, g, p3Name, dictP3)
     p4=Pr.Person(p, q, g, p4Name, dictP4)
-    
-    #not person yet:
-    # name ,p, q, g,otpDic
-    p1=P.Player(p1Name, p, q, g,  dictP1)
-    p2=P.Player(p2Name, p, q, g,  dictP2)
-    p3=P.Player(p3Name, p, q, g,  dictP3)
-    p4=P.Player(p4Name, p, q, g,  dictP4)
     
     
     rocket.receiveSignaturePublicKey(dealer.y,dealer.name)
