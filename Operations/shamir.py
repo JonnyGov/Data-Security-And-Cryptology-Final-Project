@@ -9,7 +9,7 @@ from decimal import *
       
 global field_size 
 #field_size = 10**5
-field_size = 10**5
+field_size = 99929
    
 def reconstructSecret(shares): 
       
@@ -49,19 +49,24 @@ def coeff(t,secret):
       
     return coeff 
    
+
+
 def generateShares(n,m,secret): 
       
     # Split secret using SSS into 
     # n shares with threshold m 
     cfs = coeff(m,secret) 
     shares = [] 
-      #TODO: test r is not in shares 
-    for i in range(1,n+1): 
-        r = random.randrange(1, field_size) 
+      #test r is not in shares 
+    givenRs=[]
+    r = random.randrange(1, field_size) 
+    for i in range(1,n+1):       
+        while(r in givenRs):
+            r = random.randrange(1, field_size)
+        givenRs.append(r)
         shares.append([r, polynom(r,cfs)]) #[public,private]
       
     return shares 
-  
   
 # Driver code  
 if __name__ == '__main__': 
