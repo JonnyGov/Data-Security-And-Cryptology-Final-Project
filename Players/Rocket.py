@@ -6,6 +6,7 @@ import random
 import Operations.shamir as shamir
 import Players.Player as P
 import time
+import Operations.shamirB as shamirB
 class Rocket(P.Player):
     shamirParts=[]
     def __init__(self, p, q, g ,name,otpDic):
@@ -32,7 +33,7 @@ class Rocket(P.Player):
     def _launch(self):
          if (len(self.shamirParts))<4: 
              return False
-         temp=shamir.reconstructSecret(self.shamirParts)
+         temp=shamirB.recover_secret(self.shamirParts)
          if (temp == self._secret):
              self._launchEvent()
              return True

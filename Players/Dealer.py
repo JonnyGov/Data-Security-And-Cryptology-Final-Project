@@ -6,17 +6,17 @@ import time
 import sys
 from deprecated import deprecated
 import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
+import Operations.shamirB as shamirB
 
 class Dealer(P.Player):
     
     publicSharedPart={}
     #note: for now p is a constant in shamir.py and any body can acces it witch is fine 
-    def __init__(self, name,otpDic,otpDicRokcet, p, q, g,t = 4,n= 5,secret = 1234 ):
+    def __init__(self, name,otpDic,otpDicRokcet, p, q, g,t = 4,n= 5):
          self._t=t
          self._n=n
          self.keysLeftToGive=n
-         self.__secret=secret
-         self.__shares = shamir.generateShares(n, t, secret)
+         self.__secret, self.__shares = shamirB.make_random_shares(minimum=t, shares=n)
          self.__otpDicRokcet=otpDicRokcet # only players who are allowed to have the seacret
          
          super().__init__(name, p, q, g,otpDic) 
