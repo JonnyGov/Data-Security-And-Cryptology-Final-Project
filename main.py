@@ -3,7 +3,6 @@ import Players.Person as P
 import Operations.DSA as DSA
 import Players.Rocket as Rocket
 import Players.Dealer as D
-import time
 
 def main():
     #inisilite security system:

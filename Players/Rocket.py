@@ -1,9 +1,7 @@
 
 import Operations.DSA as DSA
 import Helper
-import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
-import random
-import Operations.shamir as shamir
+
 import Players.Player as P
 import time
 import Operations.shamirB as shamirB

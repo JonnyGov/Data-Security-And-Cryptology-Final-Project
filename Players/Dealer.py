@@ -1,8 +1,6 @@
-import Operations.shamir as shamir
 import Operations.DSA as DSA
 import Players.Player as P
 import Helper 
-import time
 import sys
 from deprecated import deprecated
 import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
@@ -101,7 +99,7 @@ def testingIdUser():
             d = Dealer("Dealer",dictTest, p=p,q=q,g=g)
             d.receiveSignaturePublicKey(y, "test")
             d.IdUser("test", text, r, s)
-
+@deprecated(reason="use old shamir")
 def testingShareDistribution():
       N = 160
       L = 1024

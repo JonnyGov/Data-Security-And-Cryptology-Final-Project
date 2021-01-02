@@ -3,7 +3,6 @@ import random
 import Helper
 import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
 from deprecated import deprecated
-import Operations.shamir as shamir
 import  sys
 import math
 
@@ -77,13 +76,6 @@ class Player:
      @staticmethod
      def  createOTP(word):
          number = Helper.wordToNum(word)
-         randForMult=random.sample(range(0,int(number/2)), 1)                  
-         randNum= random.sample(range(number, abs(number + randForMult[0])), 1)
-         return Helper.numToWord(randNum[0])
-     
-     @staticmethod
-     def  createOTPBigerThenField_size():
-         number= shamir.field_size
          randForMult=random.sample(range(0,int(number/2)), 1)                  
          randNum= random.sample(range(number, abs(number + randForMult[0])), 1)
          return Helper.numToWord(randNum[0])
