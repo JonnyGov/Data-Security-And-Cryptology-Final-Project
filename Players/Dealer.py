@@ -70,6 +70,9 @@ class Dealer(P.Player):
             return None
         privateAsString= Helper.numToWord(self.__secret)
         private=self.encryptStringOTPForRocket(privateAsString,name)
+        if(private==None):
+            print(self.name+": dosen know "+name)
+            return None
         r,s=super().sign(private)
         ret=[]
         ret.append(private)
