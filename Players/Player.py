@@ -10,6 +10,7 @@ class Player:
      publicSignaturekeys={}
               
      def __init__(self,name ,p, q, g,otpDic):
+         """reciving otpy keys dict and generates keys for signature"""
          self.name=name
          #params for DSA
          self.g=g
@@ -19,9 +20,11 @@ class Player:
          self.__x, self.y = DSA.generate_keys(self.g, self.p, self.q)
          
      def receiveSignaturePublicKey(self, key,name):
+        """reciving the public keys of other players signatures"""
         self.publicSignaturekeys[name]=key
         
      def testIfHasSignarurePublicKey(self,senderName):
+         """testing whether this player holds the signature keys  for the sender"""
          if(senderName in self.publicSignaturekeys):
                   senderKey=self.publicSignaturekeys[senderName]
                   return senderKey
@@ -31,6 +34,7 @@ class Player:
               
      # verify dsa signature.        
      def IdUser(self,name,Mstring,r,s):
+         """identitying the user 'name's signature on Mstring """
          publicKey =self.testIfHasSignarurePublicKey(name)
          if(publicKey == False):
              return False
@@ -70,6 +74,7 @@ class Player:
          return ptext
      
      def sign(self,word):
+           """signing word with this persons signeture"""
            M = str.encode(word, "ascii")
            r, s = DSA.sign(M, self.p, self.q, self.g, self.__x)
            return r,s
@@ -95,6 +100,7 @@ class Player:
     
         
      def testOtpSize(self,word,otp):
+         """making sure the key is longer from the plane text for vigner"""
          if(len(word)>len(otp)):
              return False
          else:
@@ -102,6 +108,7 @@ class Player:
          
             
      def encryptStringOTP(self,word,name):
+        """ encrypting a sting using otp key and vigener cipher """
         if(name  not in self.__otpDic ):
             print(self.name+": dosent have otp for "+name)   
             return None
@@ -113,13 +120,14 @@ class Player:
         return ctext   
     
      def encryptIntOTP(self,num,name):
+          """encrypting a int using otp key and vigener cipher"""
           word=Helper.numToWord(num)
           return self.encryptStringOTP(word,name)
           
          
          
      def  decryptAsStringOTP(self, cword,name):
-     
+         """ decrypting a sting using otp key and vigener cipher """
          if(name  not in self.__otpDic ):
             print(self.name+": dosent have otp for "+name)   
             return None
@@ -131,15 +139,17 @@ class Player:
          self.removeKeyFromOtpDic(name)#removing otp - cus it was used 
          return text
      
-     def decryptAsIntOTP(self, cword,name): 
+     def decryptAsIntOTP(self, cword,name):
+          """ decrypting a sting using otp key and vigener cipher  and returing  a int"""
           return Helper.wordToNum(self.decryptAsStringOTP(cword,name))
      
      def removeKeyFromOtpDic(self,key):
+          """removing used opt"""
           r = dict(self.__otpDic)
           del r[key]
           self.__otpDic=r 
           
-     #unsafe cypto wise   
+     #unsafe cypto wise #use only for testing    
      def addKeyToOtpDic(self,name,key):
          self.__otpDic[name]=key
      

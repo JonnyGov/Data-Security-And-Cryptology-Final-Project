@@ -10,6 +10,8 @@ class Person(P.Player):
             super().__init__(name, p, q, g, otpDic)
             
     def receiveShare(self,share,name):#share=[0-public part of shamir][1-encrypted privte part of shamir][2-r][3-s]
+         """receving a share from a known player 
+            private part is decrypted using otp key  and vigner """
          if(not super().IdUser(name,share[1],share[2],share[3])):
             return None
          private =super().decryptAsStringOTP(share[1],name)
@@ -24,6 +26,9 @@ class Person(P.Player):
          #print(templist)
          
     def giveShareToRocket(self,rocketName):
+         """giving  known player a share
+            private part is encrypted using otp key  and vigner 
+            """
          ret=[]
          ret.append(self.__shared[0])
          private =super().encryptIntOTP(self.__shared[1],rocketName)

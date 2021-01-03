@@ -11,6 +11,7 @@ class Dealer(P.Player):
     publicSharedPart={}
     #note: for now p is a constant in shamir.py and any body can acces it witch is fine 
     def __init__(self, name,otpDic,otpDicRokcet, p, q, g,t = 4,n= 5):
+         """creating shares and seacret using shamir"""
          self._t=t
          self._n=n
          self.keysLeftToGive=n
@@ -21,7 +22,8 @@ class Dealer(P.Player):
     
     #to get shamir share person needs to  sign "givemeshare" 
     #note dealer singns the encrypted private part of the shamir shear
-    def getRocketShare(self, name,r,s): 
+    def getRocketShare(self, name,r,s):
+        """giving  known player a share ,private part is encrypted using otp key  and vigner """
         if(not super().IdUser(name,"givemeshare",r,s)):
             return None
         if(self.keysLeftToGive==0):
@@ -54,6 +56,9 @@ class Dealer(P.Player):
     
         
     def encryptStringOTPForRocket(self,word,name):
+        """ encrypting a sting using otp key and vigener cipher
+        using only rocket otps"""
+        
         if(name  not in self.__otpDicRokcet ):
             print(self.name+": dosent have otp for "+name)   
             return None
@@ -65,7 +70,10 @@ class Dealer(P.Player):
         return ctext   
     
     #to get seacret  the rocet needs to  sign "givemeseacret" 
-    def getSeacret(self, name,r,s): 
+    def getSeacret(self, name,r,s):
+        """giving  known rocket a share
+            secret is encrypted using otp key  and vigner 
+            """
         if(not super().IdUser(name,"givemeseacret",r,s)):
             return None
         privateAsString= Helper.numToWord(self.__secret)
