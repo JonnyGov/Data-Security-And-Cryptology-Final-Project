@@ -25,51 +25,51 @@ def main():
     dictP4={} # for person p4
     
     #otp for rocket and dealer
-    otp=Player.Player.createOTPBig()
+    otp=Player.Player.createOTPSizeOfPirme()
     otpDicRokcet[rocketName]=otp
     dictTest2[dealerName]=otp
     
     #p1
     #otp for dearl and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictP1[dealerName]=otp
     otpDicDealer[p1Name]=otp 
     
     #otp for rocket and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictTest2[p1Name]=otp
     dictP1[rocketName]=otp
     
     #p2
     #otp for dearl and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictP2[dealerName]=otp
     otpDicDealer[p2Name]=otp 
     
     #otp for rocket and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictTest2[p2Name]=otp
     dictP2[rocketName]=otp
     
     #p3
     #otp for dearl and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictP3[dealerName]=otp
     otpDicDealer[p3Name]=otp 
     
     #otp for rocket and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictTest2[p3Name]=otp
     dictP3[rocketName]=otp
     
     #p4
     #otp for dearl and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictP4[dealerName]=otp
     otpDicDealer[p4Name]=otp 
     
     #otp for rocket and person
-    otp =Player.Player.createOTPBig()
+    otp =Player.Player.createOTPSizeOfPirme()
     dictTest2[p4Name]=otp
     dictP4[rocketName]=otp
     

@@ -5,6 +5,7 @@ import Operations.OTPBacedOnVigenereCipher as OTPBacedOnVigenereCipher
 from deprecated import deprecated
 import  sys
 import math
+import Operations.shamirB as shamirB
 
 class Player:
      publicSignaturekeys={}
@@ -78,7 +79,8 @@ class Player:
            M = str.encode(word, "ascii")
            r, s = DSA.sign(M, self.p, self.q, self.g, self.__x)
            return r,s
-     @staticmethod
+     @staticmethod  
+     @deprecated( reason="You should use createOTPSizeOfPirme()")  
      def  createOTP(word):
          number = Helper.wordToNum(word)
          randForMult=random.sample(range(0,int(number/2)), 1)                  
@@ -86,10 +88,12 @@ class Player:
          return Helper.numToWord(randNum[0])
      
      @staticmethod
+     @deprecated( reason="You should use createOTPSizeOfPirme()") 
      def roundDown(x):
       return int(math.floor(x / 1000000000000000000.0)) * 1000000000000000000
   
      @staticmethod
+     @deprecated( reason="You should use createOTPSizeOfPirme()")
      def  createOTPBig():
          retStr=""
          for i in range(100):
@@ -98,7 +102,25 @@ class Player:
              retStr=retStr+Helper.numToWord(randNum[0])    
          return retStr
     
-        
+     def createOTPSizeOfPirme():
+         """creating OTP the length of the prime number used in shamir"""
+         n=shamirB._PRIME
+         randNumList=[]
+         while(n>0):
+            n=n//10
+            randNum= random.randint(0,9)
+            randNumList.append(randNum)
+            
+         if randNumList[0]==0:
+             randNumList[0]=random.randint(1,9)
+             
+         num = map(str, randNumList)   # ['1','2','3']
+         num = ''.join(num)          # '123'
+         num = int(num)              # 123  
+         return Helper.numToWord(num)
+            
+            
+            
      def testOtpSize(self,word,otp):
          """making sure the key is longer from the plane text for vigner"""
          if(len(word)>len(otp)):
@@ -200,4 +222,6 @@ if __name__ == '__main__':
   #a=sys.version
   #print(Player.createOTPBig())
   #testingOpt()
-  testingOTPIntegerEncryptDecrypt()
+  #testingOTPIntegerEncryptDecrypt()
+  print(Player.createOTPSizeOfPirme())
+  print(shamirB._PRIME)
