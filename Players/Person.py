@@ -13,6 +13,9 @@ class Person(P.Player):
          if(not super().IdUser(name,share[1],share[2],share[3])):
             return None
          private =super().decryptAsStringOTP(share[1],name)
+         if(private==None):
+            print(self.name+": dosen know "+name)
+            return None
          templist=[]
          templist.append(share[0])
          templist.append(Helper.wordToNum(private))
@@ -24,6 +27,9 @@ class Person(P.Player):
          ret=[]
          ret.append(self.__shared[0])
          private =super().encryptIntOTP(self.__shared[1],rocketName)
+         if(private==None):
+            print(self.name+": dosen know "+rocketName)
+            return None
          r,s=super().sign(private)
          ret.append(private)
          ret.append(r)
