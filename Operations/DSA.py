@@ -73,6 +73,8 @@ def sign(M, p, q, g, x):
         m = int(sha1(M).hexdigest(), 16)
         try:
             s = (invert(k, q) * (m + x * r)) % q
+            if(r==0 or s==0):
+              pass
             return r, s
         except ZeroDivisionError:
             pass
