@@ -101,7 +101,8 @@ class Player:
              randNum= random.sample(range(Player.roundDown(number), number ), 1)
              retStr=retStr+Helper.numToWord(randNum[0])    
          return retStr
-    
+     
+     @staticmethod
      def createOTPSizeOfPirme():
          """creating OTP the length of the prime number used in shamir"""
          n=shamirB._PRIME
