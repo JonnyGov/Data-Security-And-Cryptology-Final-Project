@@ -9,7 +9,6 @@ Below are the slides that were presented and the document that was deliverd with
 
 
   <summary>Document</summary><details>
-  <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/doc/Securely%20Launched%20Rocket-1.png">
   <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/doc/Securely%20Launched%20Rocket-2.png">
   <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/doc/Securely%20Launched%20Rocket-3.png">
 </details>
@@ -17,7 +16,7 @@ Below are the slides that were presented and the document that was deliverd with
 
 
   <summary>Slides</summary><details>
-  <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/slides/Securely%20Launched%20Rocket-01.png">
+
   <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/slides/Securely%20Launched%20Rocket-02.png">
   <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/slides/Securely%20Launched%20Rocket-03.png">
   <img src="https://github.com/JonnyGov/DataSecurityAndCryptology_FinalProject/blob/main/extra/slides/Securely%20Launched%20Rocket-04.png">
