@@ -5,7 +5,7 @@
  Identification of a sender at each step.
 
 
-Below are the slides that were presented and the a that was deliverd.
+Below are the slides that were presented and the document that was deliverd with the project.
 
 
   <summary>Document</summary><details>
